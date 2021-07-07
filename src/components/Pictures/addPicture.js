@@ -59,7 +59,7 @@ export default function App() {
     }
   };
 
-  const submitPost = async () => {
+  /*const submitPost = async () => {
     
     const uploadUri = image;
     let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
@@ -73,7 +73,7 @@ export default function App() {
     } catch(e) {
       console.log(e);
     }
-  }
+  }*/
 
 
   if (hasCameraPermission === null || hasGalleryPermission === false) {
@@ -108,9 +108,8 @@ export default function App() {
       { image==null ?
         <View></View>
         :
-        <Button title="Submit Post" onPress={()=> submitPost()} stle={{flex:1}}></Button>
+        <Button title="Submit Post" onPress={()=> navigation.navigate("SavePicture",{image})} stle={{flex:1}}></Button>
       }
-      {console.log(image==null)}
       {image && <Image source={{uri: image}} style={{flex: 1}}/>}
     </View>
   );
