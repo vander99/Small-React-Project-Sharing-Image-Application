@@ -23,8 +23,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Landing from './components/auth/Landing'
 import Register from './components/auth/Register'
 import Login from './components/auth/Login'
+import Logout from './components/auth/Logout'
 import Home from './components/Home'
+import homePage from './components/homePage'
 import addPicture from './components/Pictures/addPicture'
+import savePicture from './components/Pictures/savePicture'
 
 const Stack = createStackNavigator();
 
@@ -67,7 +70,11 @@ export class App extends Component{
                     <Stack.Screen name="Register" component={Register} options={ {headerShown: false}}/>
                     <Stack.Screen name="Login" component={Login} options={ {headerShown: false}}/>
                     <Stack.Screen name="Home" component={Home} options={ {headerShown: false}}/>
-                    <Stack.Screen name="addPicture" component={addPicture} options={ {headerShown: false}}/>
+                    <Stack.Screen name="addPicture" component={addPicture} options={ {headerShown: false}} navigation={this.props.navigation}/>
+                    <Stack.Screen name="savePicture" component={savePicture} options={ {headerShown: false}} navigation={this.props.navigation} />
+                    <Stack.Screen name="Logout" component={Logout} options={ {headerShown: false}} navigation={this.props.navigation} />
+                    <Stack.Screen name="homePage" component={homePage} options={ {headerShown: false}}/>
+
                 </Stack.Navigator>
         </NavigationContainer>
         );

@@ -4,12 +4,12 @@ import {View, Button, Text} from 'react-native'
 import firebase from 'firebase'
 require("firebase/firestore")
 
-export class Home extends Component {
+export class homePage extends Component {
     
     constructor(props){
         super(props);
         this.state={
-            username:''
+            post: []
         }
     }
 
@@ -19,7 +19,7 @@ export class Home extends Component {
             .doc(firebase.auth().currentUser.uid)
             .get()
             .then((infos)=>{
-                this.setState({username:infos.data().name})
+                console.log(infos.data())
             })
     }
     
@@ -27,13 +27,12 @@ export class Home extends Component {
     render() {
         return (
             <View>
-                <Text>Welcome Home ! </Text>                
+                <Text>Welcome to your profile {this.props.route.params.res} </Text>                
                 <Button title="Add Picture" onPress={()=> {this.props.navigation.navigate('addPicture')}}/>
                 <Button title="Log Out" onPress={()=> {this.props.navigation.navigate('Logout')}} />
-                <Button title="Go to home page" onPress={()=> {this.props.navigation.navigate('homePage',{res:this.state.username})}}/>
             </View>
             )
     }
 }
 
-export default Home
+export default homePage
