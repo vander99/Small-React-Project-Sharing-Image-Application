@@ -4,6 +4,8 @@ import {View, Button, Text} from 'react-native'
 import firebase from 'firebase'
 require("firebase/firestore")
 
+import Search from './features/Search'
+
 export class Home extends Component {
     
     constructor(props){
@@ -31,6 +33,7 @@ export class Home extends Component {
                 <Button title="Add Picture" onPress={()=> {this.props.navigation.navigate('addPicture')}}/>
                 <Button title="Log Out" onPress={()=> {this.props.navigation.navigate('Logout')}} />
                 <Button title="Go to home page" onPress={()=> {this.props.navigation.navigate('homePage',{res:this.state.username})}}/>
+                <Search username={this.state.username}/>
             </View>
             )
     }
