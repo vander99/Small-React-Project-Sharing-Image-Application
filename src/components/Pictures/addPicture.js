@@ -59,23 +59,6 @@ export default function addPicture({navigation}) {
     }
   };
 
-  /*const submitPost = async () => {
-    
-    const uploadUri = image;
-    let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
-
-    setUploading(true);
-    
-    try {
-      await storage().ref(filename).putFile(uploadUri);
-      setUploading(false);
-      Alert.alert('Image uploaded!');
-    } catch(e) {
-      console.log(e);
-    }
-  }*/
-
-
   if (hasCameraPermission === null || hasGalleryPermission === false) {
     return <View />;
   }
@@ -108,7 +91,7 @@ export default function addPicture({navigation}) {
       { image==null ?
         <View></View>
         :
-        <Button title="Submit Post" onPress={()=> navigation.navigate("savePicture",{image})} stle={{flex:1}}></Button>
+        <Button title="Submit Post" onPress={()=> navigation.navigate("savePicture",{image,username:this.props.route.params.res})} stle={{flex:1}}></Button>
       }
       {image && <Image source={{uri: image}} style={{flex: 1}}/>}
     </View>

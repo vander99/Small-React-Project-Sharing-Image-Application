@@ -23,7 +23,9 @@ export class Register extends Component {
                 .doc(firebase.auth().currentUser.uid)
                 .set({
                     name,
-                    email
+                    email,
+                    profilePic:"https://images.ladepeche.fr/api/v1/images/view/5c2cc0838fe56f582072cedb/large/image.jpg",
+                    desctiprion:""
                 })
         })
         .catch((error) => {

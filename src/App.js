@@ -24,8 +24,9 @@ import Landing from './components/auth/Landing'
 import Register from './components/auth/Register'
 import Login from './components/auth/Login'
 import Logout from './components/auth/Logout'
-import Home from './components/Home'
-import homePage from './components/homePage'
+import Home from './components/Main/Home'
+import homePage from './components/Main/homePage'
+import friendPage from './components/Main/friendPage'
 import addPicture from './components/Pictures/addPicture'
 import savePicture from './components/Pictures/savePicture'
 
@@ -74,6 +75,7 @@ export class App extends Component{
                     <Stack.Screen name="savePicture" component={savePicture} options={ {headerShown: false}} navigation={this.props.navigation} />
                     <Stack.Screen name="Logout" component={Logout} options={ {headerShown: false}} navigation={this.props.navigation} />
                     <Stack.Screen name="homePage" component={homePage} options={ {headerShown: false}}/>
+                    <Stack.Screen name="friendPage" component={friendPage}/>
 
                 </Stack.Navigator>
         </NavigationContainer>

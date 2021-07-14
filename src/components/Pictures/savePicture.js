@@ -46,7 +46,8 @@ export default function savePicture(props, navigation) {
             .add({
                 downloadURL,
                 caption,
-                date: firebase.firestore.FieldValue.serverTimestamp()
+                date: firebase.firestore.FieldValue.serverTimestamp(),
+                username: this.props.route.params.username
             }).then((function() {
                 props.navigation.navigate('Home')
             }))
