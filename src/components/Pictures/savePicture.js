@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, TextInput, Image, Button} from 'react-native';
+import {View, TextInput, Image, Button, Text} from 'react-native';
 
 import firebase from 'firebase'
 require("firebase/firestore")
@@ -27,7 +27,14 @@ export default function savePicture(props, navigation) {
         
         const taskCompleted = () => {
             task.snapshot.ref.getDownloadURL().then((snapshot) => {
-                savePostData(snapshot)
+                if (props.route.params.type == "newPost"){
+                savePostData(snapshot)}
+                else if (props.route.params.type == "updatePost"){
+                    updateProfilePic(snapshot)
+                }
+                else {
+                    console.log("chi haja mahiyach")
+                }
                 console.log(snapshot)
             })
         }
@@ -47,7 +54,18 @@ export default function savePicture(props, navigation) {
                 downloadURL,
                 caption,
                 date: firebase.firestore.FieldValue.serverTimestamp(),
-                username: this.props.route.params.username
+                username: props.route.params.username
+            }).then((function() {
+                props.navigation.navigate('Home')
+            }))
+    }
+
+    const updateProfilePic = (downloadURL) => {
+        firebase.firestore()
+            .collection('users')
+            .doc(firebase.auth().currentUser.uid)
+            .update({
+                profilePic: downloadURL
             }).then((function() {
                 props.navigation.navigate('Home')
             }))
@@ -55,9 +73,14 @@ export default function savePicture(props, navigation) {
     return(
         <View style={{flex: 1}}>
             <Image source={{uri: props.route.params.image}}/>
+            {
+            props.route.params.type == "newPost" ?
             <TextInput 
             placeholder="Write a Caption..."
             onChangeText={(caption)=>setCaption(caption)} />
+            :
+            <Text></Text>
+        }
             <Button title="Save" onPress={()=> uploadImage()}></Button>
         </View>
         )

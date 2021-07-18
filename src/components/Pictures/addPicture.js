@@ -18,7 +18,7 @@ if(firebase.apps.length === 0){
   firebase.initializeApp(firebaseConfig);
 }
 
-export default function addPicture({navigation}) {
+export default function addPicture(props) {
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null);
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [camera, setCamera] = useState(null);
@@ -86,12 +86,14 @@ export default function addPicture({navigation}) {
         }}
       >
       </Button>
+      <Text>{console.log(props.route.params.res)}</Text>
       <Button title="Take Picture" onPress={()=> takePicture()}></Button>
       <Button title="Pick Image From Gallery" onPress={()=> pickImage()}></Button>
       { image==null ?
         <View></View>
         :
-        <Button title="Submit Post" onPress={()=> navigation.navigate("savePicture",{image,username:this.props.route.params.res})} stle={{flex:1}}></Button>
+        <Button title="Submit Post" onPress={()=> props.navigation.navigate("savePicture",{image,username:props.route.params.res,
+                                                                      type:props.route.params.type})} style={{flex:1}}></Button>
       }
       {image && <Image source={{uri: image}} style={{flex: 1}}/>}
     </View>

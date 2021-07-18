@@ -126,7 +126,7 @@ export class Home extends Component {
         return (
             <View>
                 <Text>Welcome Home ! </Text>                
-                <Button title="Add Picture" onPress={()=> {this.props.navigation.navigate('addPicture',{res:this.state.username,type:"NewPost"})}}/>
+                <Button title="Add Picture" onPress={()=> {this.props.navigation.navigate('addPicture',{res:this.state.username,type:"newPost"})}}/>
                 <Button title="Go to home page" onPress={()=> {this.props.navigation.navigate('homePage',{res:this.state.username})}}/>
                 {  
                 this.state.haveFriends ?
