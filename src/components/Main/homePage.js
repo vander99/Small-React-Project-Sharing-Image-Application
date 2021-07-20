@@ -16,7 +16,6 @@ export class homePage extends Component {
             profilePic: '',
             newDescription: '',
             updatingDescription: false,
-            deleteImage: '',
         }
         this.saveDescription = this.saveDescription.bind(this)
         this.deletePicture = this.deletePicture.bind(this)
@@ -32,10 +31,8 @@ export class homePage extends Component {
             .doc(firebase.auth().currentUser.uid)
             .get()
             .then((infos)=>{
-                console.log(infos.data())
                 this.setState({caption:infos.data().description})
                 this.setState({profilePic:infos.data().profilePic})
-                console.log(this.state.profilePic)
             })
         // Get all my posts
         firebase.firestore()
@@ -66,15 +63,33 @@ export class homePage extends Component {
             })
     }
 
-    deletePicture(){
+    deletePicture(thePost){
+        let savePost = thePost
         firebase.firestore()
             .collection('posts')
             .doc(firebase.auth().currentUser.uid)
             .collection('userPosts')
-            .where('downloadURL','==',this.state.deleteImage)
-            .delete()
-            .then(()=>{
-                this.forceUpdate()
+            .where('downloadURL','==',thePost.downloadURL)
+            .get()
+            .then((snapshot)=>{
+                snapshot.forEach(function(doc){
+                    doc.ref.delete();
+                })
+                // Get the updated list of posts
+                let myPosts = []
+                firebase.firestore()
+                .collection('posts')
+                .doc(firebase.auth().currentUser.uid)
+                .collection("userPosts")
+                .orderBy("date","asc")
+                .get()
+                .then((infos)=>{
+                    let posts = infos.docs.map(doc => {
+                        const data= doc.data();
+                        myPosts.push(data)
+                    })
+                    this.setState({post:myPosts})
+                })
             })
     }
     
@@ -89,7 +104,6 @@ export class homePage extends Component {
                     source={{uri: this.state.profilePic}}/> 
                 <Text>{this.state.username}</Text>
                 <Text>Description: {this.state.caption}</Text>
-                <Text>{console.log(this.state.updatingDescription)}</Text>             
                 <Button title="Add Picture" onPress={()=> {this.props.navigation.navigate('addPicture',{type:"newPost", res:this.state.username})}}/>
                 <Button title="Update profile Picture" onPress={()=> {this.props.navigation.navigate('addPicture',{type:"updatePost", res:this.state.username})}}/>
                 {
@@ -108,8 +122,13 @@ export class homePage extends Component {
                             style={{width:100,height:100}}
                             source={{uri: item.downloadURL}}/>
                             <Button title="Delete Picture" onPress={()=>{
-                                this.setState({deleteImage:item.downloadURL})
-                                this.deletePicture}}></Button>
+                                this.deletePicture(item)
+                                    /*const index = this.state.post.indexOf(item)
+                                    if (index > -1){
+                                        this.state.post.splice(index,1);
+                                        this.setState({post:this.state.post})
+                                    }*/
+                            }}></Button>
                         </View>)}
                 />
                 <Button title="Go to the timeline" onPress={()=> {this.props.navigation.navigate('Home')}}/>
