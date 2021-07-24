@@ -20,7 +20,6 @@ if(firebase.apps.length === 0){
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Landing from './components/auth/Landing'
 import Register from './components/auth/Register'
 import Login from './components/auth/Login'
 import Logout from './components/auth/Logout'
@@ -29,6 +28,7 @@ import homePage from './components/Main/homePage'
 import friendPage from './components/Main/friendPage'
 import addPicture from './components/Pictures/addPicture'
 import savePicture from './components/Pictures/savePicture'
+import searchBar from './components/Features/searchBar'
 
 const Stack = createStackNavigator();
 
@@ -75,7 +75,8 @@ export class App extends Component{
                         <Stack.Screen name="savePicture" component={savePicture} options={ {headerShown: false}} navigation={this.props.navigation} />
                         <Stack.Screen name="Logout" component={Logout} options={ {headerShown: false}} navigation={this.props.navigation} />
                         <Stack.Screen name="homePage" component={homePage} options={ {headerShown: false}}/>
-                        <Stack.Screen name="friendPage" component={friendPage}/>
+                        <Stack.Screen name="friendPage" component={friendPage} options={ {headerShown: false}}/>
+                        <Stack.Screen name="searchBar" component={searchBar} options={ {headerShown: false}}/>
                     </Stack.Navigator>
                 </NavigationContainer>
         );

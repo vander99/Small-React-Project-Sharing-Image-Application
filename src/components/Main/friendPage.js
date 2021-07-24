@@ -82,7 +82,6 @@ export class friendPage extends Component {
         if (this.state.loading){
         return ( 
             <View>
-                
                     <Text>{this.state.username} </Text>                
                     <FlatList data={this.state.post} 
                             renderItem = {({item}) => (
@@ -96,7 +95,7 @@ export class friendPage extends Component {
                     { this.state.friend ?
                     <Button title="UnSubscribe" onPress={()=>{this.unSubscribe()}}/> :
                     <Button title="Subscribe" onPress={()=>this.subscribe()}/>}
-                    <Button title="Go to the timeline" onPress={()=> {this.props.navigation.goBack()}}/>
+                    <Button title="Go to the timeline" onPress={()=> {this.props.navigation.navigate('Home')}}/>
                     <Button title="Log Out" onPress={()=> {this.props.navigation.navigate('Logout')}} />
                 </View>
         )}

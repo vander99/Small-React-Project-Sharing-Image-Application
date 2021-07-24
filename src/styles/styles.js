@@ -80,14 +80,17 @@ const home = StyleSheet.create({
         paddingBottom: 15
     },
     bottomButton : {
-        height: "5%",
+        backgroundColor:'green',
+        height: "8%",
         width: "100%",
         flex: 1,
         flexDirection: "row",
         justifyContent: 'space-around',
         alignItems: 'center',
         borderTopWidth: 2,
-        borderTopColor: "#E6E6E6"
+        borderTopColor: "#E6E6E6",
+        position: 'absolute',
+        bottom: 0,
     }
 })
 

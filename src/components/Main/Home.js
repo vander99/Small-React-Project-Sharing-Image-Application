@@ -25,9 +25,7 @@ export class Home extends Component {
             friendsPosts:[],
             loading: false,
             haveFriends: false,
-            search: ''
         }
-        this.searchUser = this.searchUser.bind(this)
         this.ComponentRefresh = this.ComponentRefresh.bind(this)
     }
 
@@ -114,21 +112,6 @@ export class Home extends Component {
         this.props.navigation.addListener('focus', () => {
             this.ComponentRefresh()})
     }
-
-    searchUser(search){
-        let myUsers = []
-        firebase.firestore()
-            .collection('users')
-            .where('name','>=',search)
-            .get()
-            .then((infos)=>{
-                infos.docs.map(doc => {
-                    myUsers.push(doc)
-                })
-                this.setState({userList: myUsers})
-            })
-    }
-    
     
     render() {
         if (this.state.loading){
@@ -176,34 +159,11 @@ export class Home extends Component {
                 }/>
                 </View>
                 }
-                <View>
-                    <TextInput placeholder="Search User" onChangeText={(search)=>{
-                        this.setState({search})
-                        this.searchUser(this.state.search)}}/>
-                    {
-                        this.state.search != '' ?
-                    <FlatList
-                        numColumns={1}
-                        horizental={false}
-                        data={this.state.userList}
-                        renderItem={({item})=>(
-                            <TouchableOpacity 
-                                onPress={()=>{
-                                        this.setState({search:''});
-                                        this.props.navigation.navigate('friendPage',{res: item,
-                                                                                        friends: this.state.userFriends,
-                                                                                        originalUser: this.state.username})}}>
-                                <Text>{item.data().name}</Text>
-                            </TouchableOpacity>
-                        )} />
-                        :
-                        <View></View>
-                                        }
-                </View>
+            
                 <View style={home.bottomButton}>
                     <FontAwesome5 name="home" size={24} color="black" />
                     <EvilIcons name="plus" size={40} color="black" onPress={()=> {this.props.navigation.navigate('addPicture',{res:this.state.username,type:"newPost"})}} />
-                    <AntDesign name="search1" size={32} color="black" />
+                    <AntDesign name="search1" size={32} color="black" onPress={()=> {this.props.navigation.navigate('searchBar')}} />
                     <MaterialIcons name="logout" size={32} color="black" onPress={()=> {this.props.navigation.navigate('Logout')}} />
                     <TouchableOpacity onPress={()=>{this.props.navigation.navigate('homePage')}}>
                         <Image source={{uri: this.state.userProfilePic}} style={{width: 32,height:32, borderRadius: 400/ 2}}/>
