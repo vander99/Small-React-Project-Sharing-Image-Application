@@ -36,15 +36,6 @@ const login = StyleSheet.create({
         borderRadius: 4,
         textAlign: "center",
         justifyContent: 'center',
-        /*alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 12,
-        paddingHorizontal: 32,
-        borderRadius: 4,
-        elevation: 3,
-        width: '90%',
-        paddingTop: 20,
-        backgroundColor: 'black',*/
     },
     signInText: {
         fontSize: 16,
@@ -60,4 +51,58 @@ const login = StyleSheet.create({
     },
 })
 
-export {styles, login}
+const home = StyleSheet.create({
+    main: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F7F7F7',
+        width: '100%',
+        height: '100%',
+    },
+    timeline: {
+        height:"90%", 
+        width:"100%",
+    },
+    publicationTextHeader: {
+        padding: 10,
+        fontSize: 12,
+        fontWeight: 'bold',
+        width: "100%",
+    },
+    publicationImage: {
+        width: "100%",
+        height: 250,
+    },
+    publicationCaption: {
+        fontSize: 12,
+        padding: 6,
+        paddingBottom: 15
+    },
+    bottomButton : {
+        height: "5%",
+        width: "100%",
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        borderTopWidth: 2,
+        borderTopColor: "#E6E6E6"
+    }
+})
+
+const homepage = StyleSheet.create({
+    main : {
+        height:"100%",
+        width: "100%",
+    },
+    header : {
+        width: "30%",
+        paddingTop: 10,
+        paddingLeft: 10,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+})
+
+export {styles, login, home, homepage}

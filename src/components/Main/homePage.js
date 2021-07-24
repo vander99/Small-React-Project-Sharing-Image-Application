@@ -1,8 +1,16 @@
 import React, { Component } from 'react'
-import {View, Button, Text, FlatList, Image, TextInput} from 'react-native'
+import {View, Button, Text, FlatList, Image, TouchableOpacity, TextInput} from 'react-native'
+
+import { Ionicons } from '@expo/vector-icons'; 
+import { EvilIcons } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons'; 
+import { FontAwesome5 } from '@expo/vector-icons'; 
 
 import firebase from 'firebase'
 require("firebase/firestore")
+
+import {homepage,home} from '../../styles/styles';
 
 export class homePage extends Component {
     
@@ -31,7 +39,6 @@ export class homePage extends Component {
             .get()
             .then((infos)=>{
                 this.setState({username:infos.data().name})})
-        //this.setState({username:this.props.route.params.res})
         // Get all my informations
             firebase.firestore()
             .collection('users')
@@ -105,12 +112,14 @@ export class homePage extends Component {
     render() {
         if (this.state.loading){
         return (
-            <View>
-                <Image 
-                    style={{width:100,height:100}}
-                    source={{uri: this.state.profilePic}}/> 
-                <Text>{this.state.username}</Text>
-                <Text>Description: {this.state.caption}</Text>
+            <View style={homepage.main}>
+                <View style={homepage.header}>
+                    <Image 
+                        style={{width:100,height:100,borderRadius: 400/ 2}}
+                        source={{uri: this.state.profilePic}}/> 
+                    <Text style={{fontSize: 15, fontWeight: 'bold',}}>{this.state.username}</Text>
+                </View>   
+                <Text style={{paddingBottom: 10,paddingLeft: 25}}>{this.state.caption}</Text>
                 <Button title="Add Picture" onPress={()=> {this.props.navigation.navigate('addPicture',{type:"newPost", res:this.state.username})}}/>
                 <Button title="Update profile Picture" onPress={()=> {this.props.navigation.navigate('addPicture',{type:"updatePost", res:this.state.username})}}/>
                 {
@@ -130,16 +139,20 @@ export class homePage extends Component {
                             source={{uri: item.downloadURL}}/>
                             <Button title="Delete Picture" onPress={()=>{
                                 this.deletePicture(item)
-                                    /*const index = this.state.post.indexOf(item)
-                                    if (index > -1){
-                                        this.state.post.splice(index,1);
-                                        this.setState({post:this.state.post})
-                                    }*/
                             }}></Button>
                         </View>)}
                 />
                 <Button title="Go to the timeline" onPress={()=> {this.props.navigation.navigate('Home')}}/>
                 <Button title="Log Out" onPress={()=> {this.props.navigation.navigate('Logout')}} />
+                <View style={home.bottomButton}>
+                    <FontAwesome5 name="home" size={24} color="black" />
+                    <EvilIcons name="plus" size={40} color="black" onPress={()=> {this.props.navigation.navigate('addPicture',{res:this.state.username,type:"newPost"})}} />
+                    <AntDesign name="search1" size={32} color="black" />
+                    <MaterialIcons name="logout" size={32} color="black" onPress={()=> {this.props.navigation.navigate('Logout')}} />
+                    <TouchableOpacity onPress={()=>{this.props.navigation.navigate('homePage')}}>
+                        <Image source={{uri: this.state.profilePic}} style={{width: 32,height:32, borderRadius: 400/ 2}}/>
+                    </TouchableOpacity>
+                </View>
             </View>
             )
         }

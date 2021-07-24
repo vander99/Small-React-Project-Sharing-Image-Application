@@ -3,7 +3,6 @@ import {View, Button, TextInput,Pressable,Text} from 'react-native'
 
 import firebase from 'firebase'
 import {styles, login} from '../../styles/styles'
-import {TextInput2} from '../Features/TextInput2'
 
 
 export class Login extends Component {

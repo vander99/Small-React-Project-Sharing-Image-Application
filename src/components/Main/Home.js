@@ -1,7 +1,14 @@
-import React, { Component } from 'react'
-import {View, Button, TextInput,FlatList,Text, TouchableOpacity, Image} from 'react-native'
+import React, { Component } from 'react';
+import {View,TextInput,FlatList,Text, TouchableOpacity, Image} from 'react-native';
 
-import firebase from 'firebase'
+import firebase from 'firebase';
+import {home} from '../../styles/styles';
+
+import { EvilIcons } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons'; 
+import { FontAwesome5 } from '@expo/vector-icons'; 
+
 require("firebase/firestore")
 
 export class Home extends Component {
@@ -10,6 +17,7 @@ export class Home extends Component {
         super(props);
         this.state={
             username:'',
+            userProfilePic: '',
             userList: [],
             userFriends: [],
             allUsers:[],
@@ -36,6 +44,7 @@ export class Home extends Component {
             .get()
             .then((infos)=>{
                 this.setState({username:infos.data().name})
+                this.setState({userProfilePic: infos.data().profilePic})
                 // get user friends
                 firebase.firestore()
                 .collection('followers')
@@ -124,23 +133,22 @@ export class Home extends Component {
     render() {
         if (this.state.loading){
         return (
-            <View>
-                <Text>Welcome Home ! </Text>                
-                <Button title="Add Picture" onPress={()=> {this.props.navigation.navigate('addPicture',{res:this.state.username,type:"newPost"})}}/>
-                <Button title="Go to home page" onPress={()=> {this.props.navigation.navigate('homePage',{res:this.state.username})}}/>
+            <View style={home.main}>
                 {  
                 this.state.haveFriends ?
+                <View style={home.timeline}>
                 <FlatList 
                         numColumns={1}
                         data={this.state.friendsPosts} 
                         renderItem = {({item}) => (
-                        <View>
-                            <Text>Description: {item.caption}</Text>
-                            <Image 
-                            style={{width:100,height:100}}
+                        <View style={{borderBottomWidth: 2,borderBottomColor: 'black'}}>
+                            <Text style={home.publicationTextHeader}>{item.username}</Text>
+                            <Image style={home.publicationImage}
                             source={{uri: item.downloadURL}}/>
+                            <Text style={home.publicationCaption}>Description: {item.caption}</Text>
                         </View>)}
                     />
+                </View>
                 :
                 <View>
                 <Text>You can subscribe to:</Text>
@@ -192,7 +200,15 @@ export class Home extends Component {
                         <View></View>
                                         }
                 </View>
-                <Button title="Log Out" onPress={()=> {this.props.navigation.navigate('Logout')}} />
+                <View style={home.bottomButton}>
+                    <FontAwesome5 name="home" size={24} color="black" />
+                    <EvilIcons name="plus" size={40} color="black" onPress={()=> {this.props.navigation.navigate('addPicture',{res:this.state.username,type:"newPost"})}} />
+                    <AntDesign name="search1" size={32} color="black" />
+                    <MaterialIcons name="logout" size={32} color="black" onPress={()=> {this.props.navigation.navigate('Logout')}} />
+                    <TouchableOpacity onPress={()=>{this.props.navigation.navigate('homePage')}}>
+                        <Image source={{uri: this.state.userProfilePic}} style={{width: 32,height:32, borderRadius: 400/ 2}}/>
+                    </TouchableOpacity>
+                </View>
 
             </View>
             )
