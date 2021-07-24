@@ -65,31 +65,30 @@ export class App extends Component{
                 );
         }
         return (
-            <NavigationContainer>
-                <Stack.Navigator initialRouteName="Landing">
-                    <Stack.Screen name="Landing" component={Landing} options={ {headerShown: false}}/>
-                    <Stack.Screen name="Register" component={Register} options={ {headerShown: false}}/>
-                    <Stack.Screen name="Login" component={Login} options={ {headerShown: false}}/>
-                    <Stack.Screen name="Home" component={Home} options={ {headerShown: false}}/>
-                    <Stack.Screen name="addPicture" component={addPicture} options={ {headerShown: false}} navigation={this.props.navigation}/>
-                    <Stack.Screen name="savePicture" component={savePicture} options={ {headerShown: false}} navigation={this.props.navigation} />
-                    <Stack.Screen name="Logout" component={Logout} options={ {headerShown: false}} navigation={this.props.navigation} />
-                    <Stack.Screen name="homePage" component={homePage} options={ {headerShown: false}}/>
-                    <Stack.Screen name="friendPage" component={friendPage}/>
-
-                </Stack.Navigator>
-        </NavigationContainer>
+                <NavigationContainer>
+                    <Stack.Navigator initialRouteName="Login">
+                        {/*<Stack.Screen name="Landing" component={Landing} options={ {headerShown: false}}/>*/}
+                        <Stack.Screen name="Register" component={Register} options={ {headerShown: false}}/>
+                        <Stack.Screen name="Login" component={Login} options={ {headerShown: false}}/>
+                        <Stack.Screen name="Home" component={Home} options={ {headerShown: false}}/>
+                        <Stack.Screen name="addPicture" component={addPicture} options={ {headerShown: false}} navigation={this.props.navigation}/>
+                        <Stack.Screen name="savePicture" component={savePicture} options={ {headerShown: false}} navigation={this.props.navigation} />
+                        <Stack.Screen name="Logout" component={Logout} options={ {headerShown: false}} navigation={this.props.navigation} />
+                        <Stack.Screen name="homePage" component={homePage} options={ {headerShown: false}}/>
+                        <Stack.Screen name="friendPage" component={friendPage}/>
+                    </Stack.Navigator>
+                </NavigationContainer>
         );
     }
 }
  
-const styles = StyleSheet.create({
+/*const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+});*/
 
 export default App

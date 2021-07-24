@@ -24,9 +24,16 @@ export class homePage extends Component {
 
     componentDidMount(){
         let myPosts = []
-        this.setState({username:this.props.route.params.res})
-        // Get all my informations
+        // Get my username
         firebase.firestore()
+            .collection('users')
+            .doc(firebase.auth().currentUser.uid)
+            .get()
+            .then((infos)=>{
+                this.setState({username:infos.data().name})})
+        //this.setState({username:this.props.route.params.res})
+        // Get all my informations
+            firebase.firestore()
             .collection('users')
             .doc(firebase.auth().currentUser.uid)
             .get()
