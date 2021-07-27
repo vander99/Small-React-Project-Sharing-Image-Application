@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {View,TextInput,FlatList,Text, TouchableOpacity, Image} from 'react-native';
+import {View,FlatList,Text, TouchableOpacity, Dimensions, Image} from 'react-native';
+//import Image from 'react-native-scalable-image';
 
 import firebase from 'firebase';
 import {home} from '../../styles/styles';
@@ -8,6 +9,8 @@ import { EvilIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { FontAwesome5 } from '@expo/vector-icons'; 
+
+
 
 require("firebase/firestore")
 
@@ -124,10 +127,11 @@ export class Home extends Component {
                         numColumns={1}
                         data={this.state.friendsPosts} 
                         renderItem = {({item}) => (
-                        <View style={{borderBottomWidth: 2,borderBottomColor: 'black'}}>
+                        <View>
                             <Text style={home.publicationTextHeader}>{item.username}</Text>
-                            <Image style={home.publicationImage}
-                            source={{uri: item.downloadURL}}/>
+                            <Image style={{width:Dimensions.get('window').width,height:Dimensions.get('window').width}}
+                            source={{uri: item.downloadURL}}
+                            /*style={home.publicationImage}*//>
                             <Text style={home.publicationCaption}>Description: {item.caption}</Text>
                         </View>)}
                     />

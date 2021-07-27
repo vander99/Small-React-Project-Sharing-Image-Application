@@ -1,13 +1,11 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet,Dimensions } from 'react-native'
+
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        //height: '80%',
-        //width: '80%',
-        backgroundColor: 'red',
     }
 })
 
@@ -61,7 +59,7 @@ const home = StyleSheet.create({
         height: '100%',
     },
     timeline: {
-        height:"90%", 
+        height:"92%", 
         width:"100%",
     },
     publicationTextHeader: {
@@ -71,8 +69,8 @@ const home = StyleSheet.create({
         width: "100%",
     },
     publicationImage: {
-        width: "100%",
-        height: 250,
+        width:Dimensions.get('window').width,
+        height:Dimensions.get('window').width,
     },
     publicationCaption: {
         fontSize: 12,
@@ -80,7 +78,6 @@ const home = StyleSheet.create({
         paddingBottom: 15
     },
     bottomButton : {
-        backgroundColor:'green',
         height: "8%",
         width: "100%",
         flex: 1,
@@ -89,8 +86,23 @@ const home = StyleSheet.create({
         alignItems: 'center',
         borderTopWidth: 2,
         borderTopColor: "#E6E6E6",
-        position: 'absolute',
-        bottom: 0,
+        /*position: 'fixed',
+        bottom: 0,*/
+        backgroundColor: '#F7F7F7',
+    },
+    searchContainer : {
+        flex: 1,
+        height: "20%",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    searchBar : {
+        height: "20%",
+        width: "95%",
+        margin: 10,
+        borderWidth: 1,
+        borderRadius: 5,
+        backgroundColor: "white",
     }
 })
 

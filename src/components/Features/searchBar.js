@@ -66,10 +66,14 @@ export class searchBar extends Component {
     render() {
         return(
             <View style={{height:"100%"}}>
-                <View style={{backgroundColor:"red", height:"90%"}}>
-                <TextInput placeholder="Search User" onChangeText={(search)=>{
-                        this.setState({search})
-                        this.searchUser(this.state.search)}}/>
+                <View style={{height:"90%"}}>
+                <View style={home.searchContainer}>
+                    <TextInput placeholder="Search User" style={home.searchBar}
+                            onChangeText={(search)=>{
+                            this.setState({search})
+                            this.searchUser(this.state.search)}}/>
+                </View>
+                <View style={{height:"80%"}}>
                     {
                 this.state.search != '' ?
                     
@@ -91,8 +95,9 @@ export class searchBar extends Component {
                         <View></View>
                                         }
                 </View>
+                </View>
                 <View style={home.bottomButton}>
-                    <FontAwesome5 name="home" size={24} color="black" />
+                    <FontAwesome5 name="home" size={24} color="black" onPress={()=>{this.props.navigation.navigate('Home')}} />
                     <EvilIcons name="plus" size={40} color="black" onPress={()=> {this.props.navigation.navigate('addPicture',{res:this.state.username,type:"newPost"})}} />
                     <AntDesign name="search1" size={32} color="black" onPress={()=> {this.props.navigation.navigate('searchBar')}} />
                     <MaterialIcons name="logout" size={32} color="black" onPress={()=> {this.props.navigation.navigate('Logout')}} />

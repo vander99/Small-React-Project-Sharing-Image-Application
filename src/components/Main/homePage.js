@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {View, Button, Text, FlatList, Image, TouchableOpacity, TextInput} from 'react-native'
 
-import { Ionicons } from '@expo/vector-icons'; 
 import { EvilIcons } from '@expo/vector-icons'; 
 import { AntDesign } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
@@ -113,39 +112,48 @@ export class homePage extends Component {
         if (this.state.loading){
         return (
             <View style={homepage.main}>
+                <View style={{height:"92%"}}>
                 <View style={homepage.header}>
+                    <View style={{flex: 1, flexDirection: "row",width:"100%"}}>
                     <Image 
                         style={{width:100,height:100,borderRadius: 400/ 2}}
-                        source={{uri: this.state.profilePic}}/> 
+                        source={{uri: this.state.profilePic}}/>
+                    <View style={{position:"relative"}}>
+                    <EvilIcons name="plus" size={30} color="black" style={{position: "absolute",left:-30}} onPress={()=> {this.props.navigation.navigate('Update')}} />
+                    </View>
+                    </View>
                     <Text style={{fontSize: 15, fontWeight: 'bold',}}>{this.state.username}</Text>
-                </View>   
-                <Text style={{paddingBottom: 10,paddingLeft: 25}}>{this.state.caption}</Text>
-                <Button title="Add Picture" onPress={()=> {this.props.navigation.navigate('addPicture',{type:"newPost", res:this.state.username})}}/>
-                <Button title="Update profile Picture" onPress={()=> {this.props.navigation.navigate('addPicture',{type:"updatePost", res:this.state.username})}}/>
+                </View>  
+                <View>
+                    <Text style={{paddingBottom: 10}}>{this.state.caption}</Text>
+                </View> 
+                {/*<Button title="Update profile Picture" onPress={()=> {this.props.navigation.navigate('addPicture',{type:"updatePost", res:this.state.username})}}/>*/}
                 {
                     this.state.updatingDescription ?
                     <View>
-                    <TextInput placeholder="Update description" onChangeText={(newDescription) => this.setState({newDescription})}/>
-                    <Button title="Update" onPress={()=> {this.saveDescription()}}></Button>
+                    {/*<TextInput placeholder="Update description" onChangeText={(newDescription) => this.setState({newDescription})}/>
+                    <Button title="Update" onPress={()=> {this.saveDescription()}}></Button>*/}
                     </View>
                 :
-                    <Button title="Update description" onPress={()=>{this.setState({updatingDescription:true})}}></Button>}
+                    <View>
+                    {/*<Button title="Update description" onPress={()=>{this.setState({updatingDescription:true})}}></Button>*/}
+                    </View>}
                 <FlatList data={this.state.post} 
                         renderItem = {({item}) => (
                         <View>
-                            <Text>Username: {this.state.username} Description: {item.caption}</Text>
-                            <Image 
-                            style={{width:100,height:100}}
+                            <Text style={home.publicationTextHeader}>{item.username}</Text>
+                            <Image style={home.publicationImage}
                             source={{uri: item.downloadURL}}/>
+                            <Text style={home.publicationCaption}>Description: {item.caption}</Text>
                             <Button title="Delete Picture" onPress={()=>{
                                 this.deletePicture(item)
                             }}></Button>
-                        </View>)}
+                        </View>
+                        )}
                 />
-                <Button title="Go to the timeline" onPress={()=> {this.props.navigation.navigate('Home')}}/>
-                <Button title="Log Out" onPress={()=> {this.props.navigation.navigate('Logout')}} />
+                </View>
                 <View style={home.bottomButton}>
-                    <FontAwesome5 name="home" size={24} color="black" />
+                    <FontAwesome5 name="home" size={24} color="black" onPress={()=> {this.props.navigation.navigate('Home')}}/>
                     <EvilIcons name="plus" size={40} color="black" onPress={()=> {this.props.navigation.navigate('addPicture',{res:this.state.username,type:"newPost"})}} />
                     <AntDesign name="search1" size={32} color="black" />
                     <MaterialIcons name="logout" size={32} color="black" onPress={()=> {this.props.navigation.navigate('Logout')}} />
@@ -153,6 +161,7 @@ export class homePage extends Component {
                         <Image source={{uri: this.state.profilePic}} style={{width: 32,height:32, borderRadius: 400/ 2}}/>
                     </TouchableOpacity>
                 </View>
+                
             </View>
             )
         }

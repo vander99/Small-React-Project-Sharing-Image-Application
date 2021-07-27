@@ -29,6 +29,7 @@ import friendPage from './components/Main/friendPage'
 import addPicture from './components/Pictures/addPicture'
 import savePicture from './components/Pictures/savePicture'
 import searchBar from './components/Features/searchBar'
+import Update from './components/Features/Update'
 
 const Stack = createStackNavigator();
 
@@ -67,7 +68,6 @@ export class App extends Component{
         return (
                 <NavigationContainer>
                     <Stack.Navigator initialRouteName="Login">
-                        {/*<Stack.Screen name="Landing" component={Landing} options={ {headerShown: false}}/>*/}
                         <Stack.Screen name="Register" component={Register} options={ {headerShown: false}}/>
                         <Stack.Screen name="Login" component={Login} options={ {headerShown: false}}/>
                         <Stack.Screen name="Home" component={Home} options={ {headerShown: false}}/>
@@ -77,6 +77,8 @@ export class App extends Component{
                         <Stack.Screen name="homePage" component={homePage} options={ {headerShown: false}}/>
                         <Stack.Screen name="friendPage" component={friendPage} options={ {headerShown: false}}/>
                         <Stack.Screen name="searchBar" component={searchBar} options={ {headerShown: false}}/>
+                        <Stack.Screen name="Update" component={Update} />
+
                     </Stack.Navigator>
                 </NavigationContainer>
         );
