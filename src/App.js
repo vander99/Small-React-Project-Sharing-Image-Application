@@ -30,6 +30,7 @@ import addPicture from './components/Pictures/addPicture'
 import savePicture from './components/Pictures/savePicture'
 import searchBar from './components/Features/searchBar'
 import Update from './components/Features/Update'
+import UpdateDescription from './components/Features/UpdateDescription'
 
 const Stack = createStackNavigator();
 
@@ -78,7 +79,7 @@ export class App extends Component{
                         <Stack.Screen name="friendPage" component={friendPage} options={ {headerShown: false}}/>
                         <Stack.Screen name="searchBar" component={searchBar} options={ {headerShown: false}}/>
                         <Stack.Screen name="Update" component={Update} />
-
+                        <Stack.Screen name="UpdateDescription" component={UpdateDescription} />
                     </Stack.Navigator>
                 </NavigationContainer>
         );

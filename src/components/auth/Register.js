@@ -27,6 +27,9 @@ export class Register extends Component {
                     profilePic:"https://images.ladepeche.fr/api/v1/images/view/5c2cc0838fe56f582072cedb/large/image.jpg",
                     desctiprion:""
                 })
+                .then(()=>{
+                    this.props.navigation.navigate('Login')
+                })
         })
         .catch((error) => {
             console.log(error)

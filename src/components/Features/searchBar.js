@@ -76,7 +76,7 @@ export class searchBar extends Component {
                 <View style={{height:"80%"}}>
                     {
                 this.state.search != '' ?
-                    
+                <View style={{paddingLeft:"5%"}}> 
                     <FlatList
                         numColumns={1}
                         horizental={false}
@@ -91,6 +91,7 @@ export class searchBar extends Component {
                                 <Text>{item.data().name}</Text>
                             </TouchableOpacity>
                         )} />
+                </View>
                         :
                         <View></View>
                                         }

@@ -22,7 +22,7 @@ export class homePage extends Component {
             caption: '',
             profilePic: '',
             newDescription: '',
-            updatingDescription: false,
+            havePost: '',
         }
         this.saveDescription = this.saveDescription.bind(this)
         this.deletePicture = this.deletePicture.bind(this)
@@ -59,7 +59,10 @@ export class homePage extends Component {
                     const data= doc.data();
                     myPosts.push(data)
                 })
-                this.setState({post:myPosts})
+                if (myPosts.length != 0){
+                    this.setState({havePost:true})
+                    this.setState({post:myPosts})
+                }
                 this.setState({loading: true})
             })
     }
@@ -102,6 +105,9 @@ export class homePage extends Component {
                         myPosts.push(data)
                     })
                     this.setState({post:myPosts})
+                    if (this.state.post.length == 0){
+                        this.setState({havePost:false})
+                    }
                 })
             })
     }
@@ -125,19 +131,11 @@ export class homePage extends Component {
                     <Text style={{fontSize: 15, fontWeight: 'bold',}}>{this.state.username}</Text>
                 </View>  
                 <View>
-                    <Text style={{paddingBottom: 10}}>{this.state.caption}</Text>
+                    <Text style={{paddingBottom: 10, paddingLeft: 2}}>{this.state.caption}</Text>
                 </View> 
-                {/*<Button title="Update profile Picture" onPress={()=> {this.props.navigation.navigate('addPicture',{type:"updatePost", res:this.state.username})}}/>*/}
                 {
-                    this.state.updatingDescription ?
-                    <View>
-                    {/*<TextInput placeholder="Update description" onChangeText={(newDescription) => this.setState({newDescription})}/>
-                    <Button title="Update" onPress={()=> {this.saveDescription()}}></Button>*/}
-                    </View>
-                :
-                    <View>
-                    {/*<Button title="Update description" onPress={()=>{this.setState({updatingDescription:true})}}></Button>*/}
-                    </View>}
+                this.state.havePost ?
+                <View>
                 <FlatList data={this.state.post} 
                         renderItem = {({item}) => (
                         <View>
@@ -152,10 +150,14 @@ export class homePage extends Component {
                         )}
                 />
                 </View>
+                :
+                <View style={{height:"60%", justifyContent:"center",alignItems:"center"}}><Text style={{fontSize:15}}>No post to display</Text></View>
+                }
+                </View>
                 <View style={home.bottomButton}>
                     <FontAwesome5 name="home" size={24} color="black" onPress={()=> {this.props.navigation.navigate('Home')}}/>
                     <EvilIcons name="plus" size={40} color="black" onPress={()=> {this.props.navigation.navigate('addPicture',{res:this.state.username,type:"newPost"})}} />
-                    <AntDesign name="search1" size={32} color="black" />
+                    <AntDesign name="search1" size={32} color="black" onPress={()=> {this.props.navigation.navigate('searchBar')}} />
                     <MaterialIcons name="logout" size={32} color="black" onPress={()=> {this.props.navigation.navigate('Logout')}} />
                     <TouchableOpacity onPress={()=>{this.props.navigation.navigate('homePage')}}>
                         <Image source={{uri: this.state.profilePic}} style={{width: 32,height:32, borderRadius: 400/ 2}}/>

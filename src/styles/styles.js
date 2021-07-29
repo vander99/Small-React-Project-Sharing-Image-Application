@@ -59,7 +59,7 @@ const home = StyleSheet.create({
         height: '100%',
     },
     timeline: {
-        height:"92%", 
+        height:"86%", 
         width:"100%",
     },
     publicationTextHeader: {
@@ -86,15 +86,12 @@ const home = StyleSheet.create({
         alignItems: 'center',
         borderTopWidth: 2,
         borderTopColor: "#E6E6E6",
-        /*position: 'fixed',
-        bottom: 0,*/
         backgroundColor: '#F7F7F7',
     },
     searchContainer : {
         flex: 1,
         height: "20%",
-        justifyContent: "center",
-        alignItems: "center",
+        position: "relative",
     },
     searchBar : {
         height: "20%",
@@ -103,6 +100,8 @@ const home = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         backgroundColor: "white",
+        position: "absolute",
+        bottom: 0,
     }
 })
 

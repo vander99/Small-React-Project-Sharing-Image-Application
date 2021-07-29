@@ -44,16 +44,21 @@ export class Update extends Component {
         return(
             <View style={{height:"100%"}}>
                 <View style={{height:"92%"}}>
-                    <View style={{height:"40%",flex:1,alignItems:"center",justifyContent:"center"}}>
+                    <View style={{height:"50%",flex:1,alignItems:"center",justifyContent:"center"}}>
                     <Image 
                         style={{width:200,height:200,borderRadius: 400/ 2}}
                         source={{uri: this.state.userImagePic}}/>
                     <Text>{this.state.userCaption}</Text>
                     </View>
-                    <View style={{flex:1,flexDirection:"row",justifyContent:"space-around"}}>
-                        <Button style={login.input} title=" Update caption"></Button>
-                        <Button style={login.input} title=" Update Profile pic"></Button>
+                    <View style={{height:"50%",flexDirection:"row",justifyContent:"space-around",paddingTop:20}}>
+                        <View style={{height:"20%",width:"40%"}}>
+                            <Button title=" Update caption" onPress={()=> {this.props.navigation.navigate('UpdateDescription')}}></Button>
+                        </View>
+                        <View style={{height:"20%",width:"40%"}}>
+                            <Button title=" Update Profile pic" onPress={()=> {this.props.navigation.navigate('addPicture',{type:"updatePost", res:this.state.username})}}></Button>
+                        </View>
                     </View>
+                    <View></View>
                 </View>
                 <View style={home.bottomButton}>
                     <FontAwesome5 name="home" size={24} color="black" onPress={()=>{this.props.navigation.navigate('Home')}} />
@@ -61,7 +66,7 @@ export class Update extends Component {
                     <AntDesign name="search1" size={32} color="black" onPress={()=> {this.props.navigation.navigate('searchBar')}} />
                     <MaterialIcons name="logout" size={32} color="black" onPress={()=> {this.props.navigation.navigate('Logout')}} />
                     <TouchableOpacity onPress={()=>{this.props.navigation.navigate('homePage')}}>
-                        <Image source={{uri: this.state.userProfilePic}} style={{width: 32,height:32, borderRadius: 400/ 2}}/>
+                    <Image source={{uri: this.state.userImagePic}} style={{width: 32,height:32, borderRadius: 400/ 2}}/>
                     </TouchableOpacity>
                 </View>
             </View>

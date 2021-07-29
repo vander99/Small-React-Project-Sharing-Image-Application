@@ -1,5 +1,12 @@
 import React, { Component } from 'react'
-import {View, Button, Text, FlatList, Image} from 'react-native'
+import {View, Button, Text, FlatList, Image,TouchableOpacity} from 'react-native'
+
+import {homepage, home} from '../../styles/styles';
+
+import { EvilIcons } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons'; 
+import { FontAwesome5 } from '@expo/vector-icons'; 
 
 import firebase from 'firebase'
 require("firebase/firestore")
@@ -11,8 +18,10 @@ export class friendPage extends Component {
         this.state={
             post: [],
             username: '',
+            userProfilePic: '',
+            userCaption: '',
             friend: false,
-            loading: false
+            loading: false,
         }
         this.subscribe = this.subscribe.bind(this)
         this.unSubscribe = this.unSubscribe.bind(this)
@@ -51,6 +60,20 @@ export class friendPage extends Component {
     componentDidMount(){
         let myPosts = []
         this.setState({username:this.props.route.params.res.data().name})
+        console.log(this.props.route.params.res.data().name)
+        // Get the user personnal info
+        firebase.firestore()
+        .collection('users')
+        .where('name','==',this.props.route.params.res.data().name)
+        .get()
+        .then((infos)=>{
+            infos.docs.map(doc => {
+                console.log(doc.data())
+                this.setState({userProfilePic: doc.data().profilePic})
+                this.setState({userCaption: doc.data().description})       
+                         
+            })
+        })
         // Get the user publications
         firebase.firestore()
             .collection('posts')
@@ -81,23 +104,48 @@ export class friendPage extends Component {
     render() {
         if (this.state.loading){
         return ( 
-            <View>
-                    <Text>{this.state.username} </Text>                
-                    <FlatList data={this.state.post} 
-                            renderItem = {({item}) => (
-                            <View>
-                                <Text>Username: {this.state.username} Description: {item.caption}</Text>
-                                <Image 
-                                style={{width:100,height:100}}
-                                source={{uri: item.downloadURL}}/>
-                            </View>)}
-                    />
-                    { this.state.friend ?
-                    <Button title="UnSubscribe" onPress={()=>{this.unSubscribe()}}/> :
-                    <Button title="Subscribe" onPress={()=>this.subscribe()}/>}
-                    <Button title="Go to the timeline" onPress={()=> {this.props.navigation.navigate('Home')}}/>
-                    <Button title="Log Out" onPress={()=> {this.props.navigation.navigate('Logout')}} />
+            <View style={homepage.main}>
+                <View style={{height:"92%"}}>
+                <View style={homepage.header}>
+                    <View style={{flex: 1, flexDirection: "row",width:"100%"}}>
+                        <Image 
+                            style={{width:100,height:100,borderRadius: 400/ 2}}
+                            source={{uri: this.state.userProfilePic}}/>
+                    </View>
+                    <Text style={{fontSize: 15, fontWeight: 'bold',}}>{this.state.username}</Text>
+                </View> 
+                <View>
+                    <Text style={{paddingBottom: 10, paddingLeft: 2}}>{this.state.userCaption}</Text>
+                </View> 
+                { this.state.friend ?
+                <View style={{width: "40%",paddingLeft:"3%",borderRadius:2}}>
+                    <Button title="UnSubscribe" onPress={()=>{this.unSubscribe()}}/>
+                </View> :
+                <View style={{width: "30%",paddingLeft:"5%"}}>
+                    <Button title="Subscribe" onPress={()=>this.subscribe()}/>
+                </View>} 
+                <Text>{console.log(this.state.post)}</Text>
+                <FlatList data={this.state.post} 
+                        renderItem = {({item}) => (
+                        <View>
+                            <Text style={home.publicationTextHeader}>{item.username}</Text>
+                            <Image style={home.publicationImage}
+                            source={{uri: item.downloadURL}}/>
+                            <Text style={home.publicationCaption}>Description: {item.caption}</Text>
+                        </View>
+                        )}
+                />
                 </View>
+                <View style={home.bottomButton}>
+                    <FontAwesome5 name="home" size={24} color="black" onPress={()=> {this.props.navigation.navigate('Home')}}/>
+                    <EvilIcons name="plus" size={40} color="black" onPress={()=> {this.props.navigation.navigate('addPicture',{res:this.state.username,type:"newPost"})}} />
+                    <AntDesign name="search1" size={32} color="black" onPress={()=> {this.props.navigation.navigate('searchBar')}} />
+                    <MaterialIcons name="logout" size={32} color="black" onPress={()=> {this.props.navigation.navigate('Logout')}} />
+                    <TouchableOpacity onPress={()=>{this.props.navigation.navigate('homePage')}}>
+                        <Image source={{uri: this.state.userProfilePic}} style={{width: 32,height:32, borderRadius: 400/ 2}}/>
+                    </TouchableOpacity>
+                </View>         
+             </View>
         )}
         return (
             <View><Text>Loading...</Text></View>)

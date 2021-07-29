@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {View,FlatList,Text, TouchableOpacity, Dimensions, Image} from 'react-native';
-//import Image from 'react-native-scalable-image';
 
 import firebase from 'firebase';
 import {home} from '../../styles/styles';
@@ -28,6 +27,7 @@ export class Home extends Component {
             friendsPosts:[],
             loading: false,
             haveFriends: false,
+            haveFriendsPub: false,
         }
         this.ComponentRefresh = this.ComponentRefresh.bind(this)
     }
@@ -82,7 +82,7 @@ export class Home extends Component {
                             }
                             this.setState({friendsInfo:myFriendsInfo})
                         } 
-                        // get the 2 latest posts of my friends
+                        // get the latest posts of my friends
                         for (var ii=0; ii<this.state.friendsInfo.length;ii++){
                             firebase.firestore()
                             .collection('posts')
@@ -96,14 +96,14 @@ export class Home extends Component {
                                     const data= doc.data();
                                     timelinePosts.push(data)
                                 })
-                                this.setState({friendsPosts: timelinePosts})
+                                if (timelinePosts.length != 0){
+                                    this.setState({haveFriendsPub:true})
+                                    this.setState({friendsPosts: timelinePosts})
+                                }
                                 this.setState({haveFriends:true})
                                 this.setState({loading:true})
                             })
                         }}
-                        /*timelinePosts.sort(function(a,b){
-                            return new Date(b.date) - new Date(a.date)
-                        })*/
                     })
                 })
             })
@@ -120,9 +120,16 @@ export class Home extends Component {
         if (this.state.loading){
         return (
             <View style={home.main}>
+                <View style={{height:"6%",width:"100%", justifyContent:"center"}}>
+                    <Image source={require('../../styles/SharePicc.png')} style={{height:"90%",width:"40%",paddingLeft:10}}/>
+                </View>
                 {  
                 this.state.haveFriends ?
+                
                 <View style={home.timeline}>
+                {
+                this.state.haveFriendsPub ?
+                <View>
                 <FlatList 
                         numColumns={1}
                         data={this.state.friendsPosts} 
@@ -137,8 +144,12 @@ export class Home extends Component {
                     />
                 </View>
                 :
-                <View>
-                <Text>You can subscribe to:</Text>
+                <View style={{height:"60%",alignItems:"center",justifyContent:"center"}}><Text>Your friends have nothing to show :(</Text></View>
+                }
+                </View>
+                :
+                <View style={{height:"86%",width:"100%",alignItems:"center",paddingTop:"10%"}}>
+                <Text style={{paddingBottom:10,fontSize:20}}>You can subscribe to:</Text>
                 <FlatList data={this.state.allUsers} renderItem={({item}) => {
                     
                     return(
