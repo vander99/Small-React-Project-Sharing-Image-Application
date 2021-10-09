@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View,FlatList,Text, TouchableOpacity, Dimensions, Image} from 'react-native';
+import {View,ScrollView,FlatList,Text, TouchableOpacity, Dimensions, Image} from 'react-native';
 
 import firebase from 'firebase';
 import {home} from '../../styles/styles';
@@ -129,7 +129,7 @@ export class Home extends Component {
                 <View style={home.timeline}>
                 {
                 this.state.haveFriendsPub ?
-                <View>
+                <ScrollView>
                 <FlatList 
                         numColumns={1}
                         data={this.state.friendsPosts} 
@@ -142,7 +142,7 @@ export class Home extends Component {
                             <Text style={home.publicationCaption}>Description: {item.caption}</Text>
                         </View>)}
                     />
-                </View>
+                </ScrollView>
                 :
                 <View style={{height:"60%",alignItems:"center",justifyContent:"center"}}><Text>Your friends have nothing to show :(</Text></View>
                 }

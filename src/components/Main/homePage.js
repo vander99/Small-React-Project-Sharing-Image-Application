@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {View, Button, Text, FlatList, Image, TouchableOpacity, TextInput} from 'react-native'
+import {View, ScrollView, Button, Text, FlatList, Image, TouchableOpacity, TextInput} from 'react-native'
 
 import { EvilIcons } from '@expo/vector-icons'; 
 import { AntDesign } from '@expo/vector-icons'; 
@@ -138,7 +138,7 @@ export class homePage extends Component {
                 <View>
                 <FlatList data={this.state.post} 
                         renderItem = {({item}) => (
-                        <View>
+                        <ScrollView>
                             <Text style={home.publicationTextHeader}>{item.username}</Text>
                             <Image style={home.publicationImage}
                             source={{uri: item.downloadURL}}/>
@@ -146,7 +146,7 @@ export class homePage extends Component {
                             <Button title="Delete Picture" onPress={()=>{
                                 this.deletePicture(item)
                             }}></Button>
-                        </View>
+                        </ScrollView>
                         )}
                 />
                 </View>

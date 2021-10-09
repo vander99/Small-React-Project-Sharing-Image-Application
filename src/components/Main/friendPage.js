@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {View, Button, Text, FlatList, Image,TouchableOpacity} from 'react-native'
+import {View,ScrollView, Button, Text, FlatList, Image,TouchableOpacity} from 'react-native'
 
 import {homepage, home} from '../../styles/styles';
 
@@ -105,7 +105,7 @@ export class friendPage extends Component {
         if (this.state.loading){
         return ( 
             <View style={homepage.main}>
-                <View style={{height:"92%"}}>
+                <ScrollView style={{height:"92%"}}>
                 <View style={homepage.header}>
                     <View style={{flex: 1, flexDirection: "row",width:"100%"}}>
                         <Image 
@@ -135,7 +135,7 @@ export class friendPage extends Component {
                         </View>
                         )}
                 />
-                </View>
+                </ScrollView>
                 <View style={home.bottomButton}>
                     <FontAwesome5 name="home" size={24} color="black" onPress={()=> {this.props.navigation.navigate('Home')}}/>
                     <EvilIcons name="plus" size={40} color="black" onPress={()=> {this.props.navigation.navigate('addPicture',{res:this.state.username,type:"newPost"})}} />

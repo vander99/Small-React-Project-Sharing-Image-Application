@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {View,TextInput,FlatList,Text, TouchableOpacity, Image} from 'react-native'
+import {View,ScrollView,TextInput,FlatList,Text, TouchableOpacity, Image} from 'react-native'
 
 import firebase from 'firebase'
 require("firebase/firestore")
@@ -76,7 +76,7 @@ export class searchBar extends Component {
                 <View style={{height:"80%"}}>
                     {
                 this.state.search != '' ?
-                <View style={{paddingLeft:"5%"}}> 
+                <ScrollView style={{paddingLeft:"5%"}}> 
                     <FlatList
                         numColumns={1}
                         horizental={false}
@@ -91,7 +91,7 @@ export class searchBar extends Component {
                                 <Text>{item.data().name}</Text>
                             </TouchableOpacity>
                         )} />
-                </View>
+                </ScrollView>
                         :
                         <View></View>
                                         }
